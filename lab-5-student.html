@@ -3380,7 +3380,7 @@ To https://github.com/atheobold/introduction-to-quarto-allison-theobold.git
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># you may want to use code to answer this question</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>teacher_evals <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(teacher_id,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(teacher_id, <span class="co">#counts number of teachers and their course</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        course_id</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">%&gt;%</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3454,8 +3454,8 @@ To https://github.com/atheobold/introduction-to-quarto-allison-theobold.git
 <p><strong>6. How many unique instructors and unique courses are present in the cleaned dataset?</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunk for Q5</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>uniqueinstructor <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(teacher_evals_clean<span class="sc">$</span>teacher_id)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>uniquecourse <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(teacher_evals_clean<span class="sc">$</span>course_id)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>uniqueinstructor <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(teacher_evals_clean<span class="sc">$</span>teacher_id) <span class="co">#identifies unique values</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>uniquecourse <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(teacher_evals_clean<span class="sc">$</span>course_id) <span class="co">#identifies unique values</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>uniqueinstructor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 297</code></pre>
@@ -3479,7 +3479,7 @@ To https://github.com/atheobold/introduction-to-quarto-allison-theobold.git
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span> academic_degree,</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> teacher_id,</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> sex)) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co">#creates scatter plot</span></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Academic Degrees Earned Among Teachers&quot;</span>,</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;academic degree&quot;</span>,</span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;teacher (n)&quot;</span>,</span>
@@ -3513,8 +3513,8 @@ To https://github.com/atheobold/introduction-to-quarto-allison-theobold.git
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunk for Q8</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>teacher_evals_clean <span class="sc">%&gt;%</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(course_id, teacher_id, question_no) <span class="sc">%&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(course_id,teacher_id) <span class="sc">%&gt;%</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">==</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(course_id,teacher_id) <span class="sc">%&gt;%</span> <span class="co">#counts number of individuals among courses</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">==</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span> <span class="co"># extracts data from all nine questions</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 49</code></pre>
@@ -3543,24 +3543,24 @@ To https://github.com/atheobold/introduction-to-quarto-allison-theobold.git
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunk for Q10</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>teacher_evals_clean <span class="sc">%&gt;%</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(seniority <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teacher_id) <span class="sc">%&gt;%</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_fail_pct =</span> <span class="fu">mean</span>(percent_failed_cur, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(avg_fail_pct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(seniority <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="co">#extracts only data of seniority level 1</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teacher_id) <span class="sc">%&gt;%</span> <span class="co"># groups seniority level 1 data by teacher</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_fail_pct =</span> <span class="fu">mean</span>(percent_failed_cur, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="co">#calculates summary statistics for average failing percentage</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_fail_pct)) <span class="co">#arrranges percentages in descending order</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 33 × 2
    teacher_id avg_fail_pct
    &lt;chr&gt;             &lt;dbl&gt;
- 1 102379           0     
- 2 103092           0     
- 3 106126           0     
- 4 86222            0     
- 5 98650            0     
- 6 98651            0     
- 7 105217           0.025 
- 8 84689            0.0408
- 9 80974            0.0556
-10 98652            0.0662
+ 1 106692            0.68 
+ 2 102391            0.519
+ 3 103088            0.470
+ 4 82918             0.437
+ 5 109986            0.362
+ 6 106429            0.339
+ 7 106428            0.237
+ 8 101704            0.226
+ 9 104362            0.217
+10 101945            0.210
 # ℹ 23 more rows</code></pre>
 </div>
 </div>
@@ -3571,26 +3571,26 @@ To https://github.com/atheobold/introduction-to-quarto-allison-theobold.git
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code chunk for Q11</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>teacher_evals_clean <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&quot;female&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(academic_degree <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;dr&quot;</span>, <span class="st">&quot;prof&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&quot;female&quot;</span>) <span class="sc">%&gt;%</span> <span class="co">#extracts only female teacher data</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(academic_degree <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;dr&quot;</span>, <span class="st">&quot;prof&quot;</span>)) <span class="sc">%&gt;%</span> <span class="co">#extracts only doctorate and professional degrees</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(teacher_id, academic_degree) <span class="sc">%&gt;%</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_resp =</span> <span class="fu">mean</span>(resp_share, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_resp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_resp =</span> <span class="fu">mean</span>(resp_share, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="co">#calculates mean summary statistics for average response</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(avg_resp) <span class="co">#arranges responses in ascending order </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 74 × 3
 # Groups:   teacher_id [74]
    teacher_id academic_degree avg_resp
    &lt;chr&gt;      &lt;chr&gt;              &lt;dbl&gt;
- 1 101508     dr                 0.522
- 2 66292      dr                 0.345
- 3 66289      dr                 0.256
- 4 76408      dr                 0.25 
- 5 60947      dr                 0.221
- 6 66291      dr                 0.200
- 7 62909      dr                 0.185
- 8 76394      dr                 0.182
- 9 66281      dr                 0.173
-10 102728     dr                 0.167
+ 1 59338      dr                0.0148
+ 2 42362      dr                0.0303
+ 3 50714      dr                0.0312
+ 4 42591      dr                0.0365
+ 5 56345      dr                0.0446
+ 6 82918      dr                0.05  
+ 7 37013      dr                0.0547
+ 8 50760      dr                0.0588
+ 9 38335      dr                0.0599
+10 51353      dr                0.0607
 # ℹ 64 more rows</code></pre>
 </div>
 </div>

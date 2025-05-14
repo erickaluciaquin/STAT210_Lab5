@@ -179,7 +179,7 @@ The data set analyses teacher evaluations made by their students based on a regi
 #| label: row-identification
 # you may want to use code to answer this question
 teacher_evals %>%
-  count(teacher_id,
+  count(teacher_id, #counts number of teachers and their course
         course_id
       ) %>%
   filter(n > 1)
@@ -226,8 +226,8 @@ teacher_evals_clean
 ```{r}
 #| label: unique-courses
 # code chunk for Q5
-uniqueinstructor <- n_distinct(teacher_evals_clean$teacher_id)
-uniquecourse <- n_distinct(teacher_evals_clean$course_id)
+uniqueinstructor <- n_distinct(teacher_evals_clean$teacher_id) #identifies unique values
+uniquecourse <- n_distinct(teacher_evals_clean$course_id) #identifies unique values
 uniqueinstructor
 uniquecourse
 ```
@@ -252,7 +252,7 @@ teacher_evals_clean %>%
   ggplot(aes(x= academic_degree,
            y = teacher_id,
            color = sex)) +
-  geom_point() +
+  geom_point() + #creates scatter plot
   labs(title = "Academic Degrees Earned Among Teachers",
        x = "academic degree",
        y = "teacher (n)",
@@ -274,8 +274,8 @@ Based on this dataset, there are more males with doctorate, master's, and profes
 # code chunk for Q8
 teacher_evals_clean %>%
   distinct(course_id, teacher_id, question_no) %>%
-  count(course_id,teacher_id) %>%
-  filter(n == 9) %>%
+  count(course_id,teacher_id) %>% #counts number of individuals among courses
+  filter(n == 9) %>% # extracts data from all nine questions
   nrow()
 ```
 
@@ -298,10 +298,10 @@ teacher_evals_clean %>%
 #| label: one-year-experience-failing-students
 # code chunk for Q10
 teacher_evals_clean %>%
-  filter(seniority == 1) %>%
-  group_by(teacher_id) %>%
-  summarise(avg_fail_pct = mean(percent_failed_cur, na.rm = TRUE)) %>%
-  arrange(avg_fail_pct)
+  filter(seniority == 1) %>% #extracts only data of seniority level 1
+  group_by(teacher_id) %>% # groups seniority level 1 data by teacher
+  summarise(avg_fail_pct = mean(percent_failed_cur, na.rm = TRUE)) %>% #calculates summary statistics for average failing percentage
+  arrange(desc(avg_fail_pct)) #arrranges percentages in descending order
 ```
 
 > Teachers 102379, 102379, 106126, 86222, 98650, and 98651 had the lowest average percentage of 0.0% failing students, while Teacher 106692 had the highest average percentage of 68% failing students.
@@ -312,10 +312,10 @@ teacher_evals_clean %>%
 #| label: female-instructor-student-response
 # code chunk for Q11
 teacher_evals_clean %>%
-  filter(sex == "female") %>%
-  filter(academic_degree %in% c("dr", "prof")) %>%
+  filter(sex == "female") %>% #extracts only female teacher data
+  filter(academic_degree %in% c("dr", "prof")) %>% #extracts only doctorate and professional degrees
   group_by(teacher_id, academic_degree) %>%
-  summarise(avg_resp = mean(resp_share, na.rm = TRUE)) %>%
-  arrange(desc(avg_resp))
+  summarise(avg_resp = mean(resp_share, na.rm = TRUE)) %>% #calculates mean summary statistics for average response
+  arrange(avg_resp) #arranges responses in ascending order 
 ```
 > Female teacher 101508 with a doctorate degree has the highest average percent of students responding to the evaluation across all their courses with 52.17%. Female teacher 59338 with a doctorate degree has the lowest average percent of students responding to the evaluation across all their courses with 1.48%.
