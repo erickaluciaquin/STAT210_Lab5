@@ -221,15 +221,21 @@ teacher_evals_clean
 ```{r}
 #| label: unique-courses
 # code chunk for Q5
-
+uniqueinstructor <- n_distinct(teacher_evals_clean$teacher_id)
+uniquecourse <- n_distinct(teacher_evals_clean$course_id)
+uniqueinstructor
+uniquecourse
 ```
+
+There are 297 unique instructors and 939 unique courses present in the cleaned dataset. 
 
 **7. One teacher-course combination has some missing values, coded as `NA`. Which instructor has these missing values? Which course? What variable are the missing values in?**
 
 ```{r}
 #| label: uncovering-missing-values
 # code chunk for Q6
-
+teacher_na <- teacher_evals_clean %>%
+  filter
 ```
 
 **8. What are the demographics of the instructors in this study? Investigate the variables `academic_degree`, `seniority`, and `sex` and summarize your findings in ~3 complete sentences.**
@@ -237,8 +243,24 @@ teacher_evals_clean
 ```{r}
 #| label: exploring-demographics-of-instructors
 # code chunk for Q7
+teacher_evals_clean %>%
+  ggplot(aes(x= academic_degree,
+           y = teacher_id,
+           color = sex)) +
+  geom_point() +
+  labs(title = "Academic Degrees Earned Among Teachers",
+       x = "academic degree",
+       y = "teacher (n)",
+       color = "sex") 
+  
 
+teacher_evals_clean %>%
+count(academic_degree, sex)
 ```
+
+Based on this dataset, there are more males with doctorate, master's, and professional degrees than females. However, the highest number of teachers with a PhD in a single seniority level (2) is led by women ($n$=955). There are more female teachers with no degree than male teachers ($n$=248). Women with professional degrees make up roughly 2% of the whole teacher population with professional degree, but this cohort is the lowest among all of the groups in the dataset. Seniority level 2 has the most teachers in both female and male teachers among all academic degree level ($n$=1722). On the other hand, seniority level 5 has the least teachers among all academic levels ($n$=280).
+
+
 
 **9. Each course seems to have used a different subset of the nine evaluation questions. How many teacher-course combinations asked all nine questions?**
 
