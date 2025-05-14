@@ -157,7 +157,7 @@ library(tidyverse)
 ```{r}
 #| label: load-data
 # code chunk for importing the data
-teacher_evals <- read_csv("data raw/teacher_evals.csv")
+teacher_evals <- read_csv("dataraw/teacher_evals.csv")
 ```
 
 ### Data Inspection + Summary
@@ -179,11 +179,13 @@ The data set analyses teacher evaluations made by their students based on a regi
 #| label: row-identification
 # you may want to use code to answer this question
 teacher_evals %>%
-  select(teacher_id) %>%
-  nrow() == nrow(teacher_evals)
+  count(teacher_id,
+        course_id
+      ) %>%
+  filter(n > 1)
 ```
 
-A single row in a data set is identified by the teacher ID. 
+A single row in a data set is identified by the teacher ID and course ID. 
 
 **5. Use _one_ `dplyr` pipeline to clean the data by:**
 
@@ -200,8 +202,9 @@ A single row in a data set is identified by the teacher ID.
 teacher_evals_clean <- teacher_evals %>%
   rename(sex = gender) %>% # renames variable from 'gender' to 'sex'
   filter(no_participants >= 10) %>% # removes all courses with fewer than ten respondents
-  mutate(teacher_id = as.character(teacher_id), # changes data type to chr variables
-         course_id = as.character(course_id))
+  mutate(
+    teacher_id = as.character(teacher_id), # changes data type to chr variables
+         course_id = as.character(course_id)) %>%
   select(course_id,
          teacher_id,
          question_no,
@@ -212,6 +215,8 @@ teacher_evals_clean <- teacher_evals %>%
          academic_degree,
          seniority,
          sex)
+
+  
 write_csv(teacher_evals_clean, "dataclean/teacher_evals_clean.csv")
 teacher_evals_clean
 ```
@@ -267,8 +272,14 @@ Based on this dataset, there are more males with doctorate, master's, and profes
 ```{r}
 #| label: teacher-course-asked-every-question
 # code chunk for Q8
-
+teacher_evals_clean %>%
+  distinct(course_id, teacher_id, question_no) %>%
+  count(course_id,teacher_id) %>%
+  filter(n == 9) %>%
+  nrow()
 ```
+
+> There were forty nine teacher-course combinations that asked all nine questions
 
 ## Rate my Professor
 
@@ -277,7 +288,8 @@ Based on this dataset, there are more males with doctorate, master's, and profes
 ```{r}
 #| label: question-1-high-low
 # code chunk for Q9
-
+teacher_evals_clean %>%
+  filter(question_no == "1") 
 ```
 
 **11. Which instructors with one year of experience had the highest and lowest average percentage of students failing in the current semester across all their courses?**
@@ -285,13 +297,25 @@ Based on this dataset, there are more males with doctorate, master's, and profes
 ```{r}
 #| label: one-year-experience-failing-students
 # code chunk for Q10
-
+teacher_evals_clean %>%
+  filter(seniority == 1) %>%
+  group_by(teacher_id) %>%
+  summarise(avg_fail_pct = mean(percent_failed_cur, na.rm = TRUE)) %>%
+  arrange(avg_fail_pct)
 ```
+
+> Teachers 102379, 102379, 106126, 86222, 98650, and 98651 had the lowest average percentage of 0.0% failing students, while Teacher 106692 had the highest average percentage of 68% failing students.
 
 **12. Which female instructors with either a doctorate or professional degree had the highest and lowest average percent of students responding to the evaluation across all their courses?**
 
 ```{r}
 #| label: female-instructor-student-response
 # code chunk for Q11
-
+teacher_evals_clean %>%
+  filter(sex == "female") %>%
+  filter(academic_degree %in% c("dr", "prof")) %>%
+  group_by(teacher_id, academic_degree) %>%
+  summarise(avg_resp = mean(resp_share, na.rm = TRUE)) %>%
+  arrange(desc(avg_resp))
 ```
+> Female teacher 101508 with a doctorate degree has the highest average percent of students responding to the evaluation across all their courses with 52.17%. Female teacher 59338 with a doctorate degree has the lowest average percent of students responding to the evaluation across all their courses with 1.48%.
